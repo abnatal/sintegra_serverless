@@ -1,0 +1,25 @@
+1) Create a IAM role;
+
+
+============
+Create a custom lambda function:
+
+1) Create a virtual environment:
+python.exe -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+2) Install dependecies:
+pip install bs4
+
+3) Create the lambda function:
+vi lambda_function.py
+
+4) Pack it with the virtual environment:
+cp .\lambda_function.py .\.venv\Lib\site-packages\
+cd .\.venv\Lib\site-packages\
+zip -r9 my_package.zip *
+
+# Actually, you don't need to pack everything! Just the packages you really need to run the code
+# For this example, I zipped only the lambda_function.py, and the beautifulsoup*, bs4*, and soupsieve* directories.
+
+5) Upload the zip file to your lambda function ("Upload From" button on "Code source") and test it.
