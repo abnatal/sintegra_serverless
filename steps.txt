@@ -1,7 +1,8 @@
 1) Create a IAM role;
 
 
-============
+====================
+
 Create a custom lambda function:
 
 1) Create a virtual environment:
@@ -23,3 +24,18 @@ zip -r9 my_package.zip *
 # For this example, I zipped only the lambda_function.py, and the beautifulsoup*, bs4*, and soupsieve* directories.
 
 5) Upload the zip file to your lambda function ("Upload From" button on "Code source") and test it.
+
+====================
+
+Using SNS to send an email notification:
+URL: https://sa-east-1.console.aws.amazon.com/sns/
+
+1) Create a topic and save its ARN;
+
+2) Create a subscription - Protocol: email.
+
+3) Use boto3 to publish the message to the topic.
+
+4) Edit the "Configuration - Execution role" of the function and add the "AmazonSNSFullAccess" policy to the role;
+
+// ("errorMessage": "An error occurred (AuthorizationError) when calling the Publish operation: User: arn:aws:sts::xxx is not authorized to perform: SNS:Publish on resource: arn:aws:sns:xxxx because no identity-based policy allows the SNS:Publish action",)

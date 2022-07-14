@@ -1,13 +1,16 @@
 import json
+import boto3
 from sintegra_data import extract_data
 
 def lambda_handler(event, context):
+
+    company_data = extract_data(event['html'])
+    
+    sns_client = boto3.client('sns')
+    sns_arn = 'arn:aws:sns:sa-east-1:**********:SintegraNotificationTopic'
+    sns_client.publish(TopicArn = sns_arn, Message = json.dumps(company_data), Subject='Data from Sintegra')
+
     return {
         'statusCode': 200,
-        'body': json.dumps(extract_data(context['html']))
+        'body': json.dumps(company_data)
     }
-
-if __name__ == '__main__':
-    with open('example.html', 'r') as f:
-        context = {'html': f.read()}
-    print(lambda_handler(None, context))

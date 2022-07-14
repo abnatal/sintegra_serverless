@@ -10,7 +10,3 @@ def extract_data(html):
         if i < len(HTML_FIELDS):
             result[HTML_FIELDS[i]] = dado.text.strip().strip('\t').strip('\n')
     return result
-
-if __name__ == '__main__':
-    with open('example.html', 'r') as f:
-        print(extract_data(f.read()))
