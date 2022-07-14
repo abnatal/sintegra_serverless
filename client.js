@@ -1,0 +1,1 @@
+javascript:{var xhr=new XMLHttpRequest(); xhr.open('POST','https://gateway-api-endpoint',true);  xhr.setRequestHeader("Content-Type","application/json"); xhr.onload=function(){alert(this.responseText)}; xhr.send(JSON.stringify({"html": document.documentElement.outerHTML}));}
