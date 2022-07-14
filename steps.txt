@@ -1,15 +1,10 @@
-1) Create a IAM role;
+* Create a custom lambda function:
 
-
-====================
-
-Create a custom lambda function:
-
-1) Create a virtual environment:
+1) Create a local virtual environment:
 python.exe -m venv .venv
 .\.venv\Scripts\Activate.ps1
 
-2) Install dependecies:
+2) Install dependencies:
 pip install bs4
 pip install boto3
 
@@ -22,22 +17,20 @@ cd .\.venv\Lib\site-packages\
 zip -r9 my_package.zip *
 
 # Actually, you don't need to pack everything! Just the packages you really need to run the code
-# For this example, I zipped only the lambda_function.py, and the beautifulsoup*, bs4*, and soupsieve* directories.
+# For this example, I've zipped only the lambda_function.py, and the beautifulsoup*, bs4*, and soupsieve* directories.
 
 5) Upload the zip file to your lambda function ("Upload From" button on "Code source") and test it.
 
-====================
+========================================
 
-Using SNS to send an email notification:
+* Using SNS to send an email notification:
 URL: https://sa-east-1.console.aws.amazon.com/sns/
 
 1) Create a topic and save its ARN;
 
-2) Create a subscription - Protocol: email;
+2) Create a subscription (protocol: email);
 
-3) Use boto3 to publish the message to the topic;
-
-4) Edit the "Configuration - Execution role" of the function and add a custom policy to the role:
+3) Edit the "Configuration - Execution role" of the lambda function and add a custom policy to the role:
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -48,3 +41,15 @@ URL: https://sa-east-1.console.aws.amazon.com/sns/
         }
     ]
 }
+
+4) Use boto3 in your lambda function to publish the message to the topic;
+
+========================================
+
+* Create an API gateway:
+URL: https://sa-east-1.console.aws.amazon.com/apigateway/main/
+
+1) Create a new API
+Protocol: HTTP
+Integration: <lambda_function>
+CORS: Access-Control-Allow-Origin:*, Access-Control-Allow-Headers: content-type
