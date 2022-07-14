@@ -11,6 +11,7 @@ python.exe -m venv .venv
 
 2) Install dependecies:
 pip install bs4
+pip install boto3
 
 3) Create the lambda function:
 vi lambda_function.py
@@ -32,10 +33,18 @@ URL: https://sa-east-1.console.aws.amazon.com/sns/
 
 1) Create a topic and save its ARN;
 
-2) Create a subscription - Protocol: email.
+2) Create a subscription - Protocol: email;
 
-3) Use boto3 to publish the message to the topic.
+3) Use boto3 to publish the message to the topic;
 
-4) Edit the "Configuration - Execution role" of the function and add the "AmazonSNSFullAccess" policy to the role;
-
-// ("errorMessage": "An error occurred (AuthorizationError) when calling the Publish operation: User: arn:aws:sts::xxx is not authorized to perform: SNS:Publish on resource: arn:aws:sns:xxxx because no identity-based policy allows the SNS:Publish action",)
+4) Edit the "Configuration - Execution role" of the function and add a custom policy to the role:
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [ "sns:Publish" ],
+            "Effect": "Allow",
+            "Resource": [ "<sns-topic-arn>" ]
+        }
+    ]
+}
